@@ -1,0 +1,36 @@
+%ul{class: 'list-group list-group-flush'}
+    %li{class:'list-group-item w-25' }
+    %p Name:
+        = product.name
+        %br
+    %pType:
+        = product.product_type
+        %br
+    %p Price:
+        = product.price
+        %br
+    %p Rating:
+        = product.avg
+        %br
+        - if current_user && (current_user.roles_mask == 0)
+            %br
+            = form_for :review, url: {controller: 'reviews', action: 'create', method: 'post'} do |f|
+                %table
+                    %tr
+                        %td
+                            %label{:for => "value", style: 'margin-right: 10px'}> Value
+                            = f.number_field :value, min: 0, max: 5.0, step: 0.1, class: 'form-group'
+                        %td
+                    %tr
+                    %tr
+                        %td
+                            = f.hidden_field :product_id, value: product.id
+                        %td
+                    %tr
+                = f.submit 'Add Review', class: 'btn btn-outline-warning'
+            %br
+            = link_to 'Buy', {controller: 'purchases', action: "create", purchase: {product_id: product.id, price: product.price}}, method: :post, :id => "buy_link", class: 'btn btn-primary w-25'
+        - if current_user && (current_user.roles_mask == 2 || current_user.roles_mask==1 && current_user.id==product.user_id)
+            = button_to 'Destroy', product_path(product), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+        %br
+        %br

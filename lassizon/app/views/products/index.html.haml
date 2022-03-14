@@ -1,0 +1,45 @@
+%head
+    :css
+        html, body {
+            text-align:center;
+        }
+
+%body
+%h1 WELCOME TO LASSIZON
+=form_tag products_path, method: :get do
+    = text_field_tag :search, params[:search], class: 'w-50 p-2 left-margin 10px', style: 'margin-left: 10px'
+    = submit_tag "Search", name: nil, class: 'btn btn-outline-info'
+    %br
+    %br
+
+-flash.each do |key, value|
+    %div
+    =value
+
+
+- if current_user && (current_user.roles_mask == 1)
+    = form_for :product, url: {action: "create", method: "post"} do |f|
+        %row
+            %col
+                %label{:for => "name", class: "form-text text-muted"}> Name
+                = f.text_field :name, class: 'form-group'
+            %col
+        %row
+        %row
+            %col
+                %label{:for => "product_type", class: "form-text text-muted"}> Type
+                = f.text_field :product_type, class: 'form-group'
+            %col
+        %row
+        %row
+            %col
+                %label{:for => "price", class: "form-text text-muted"}> Price
+                = f.text_field :price, class: 'form-group'
+            %col
+        %row
+        = f.submit 'Add Product', id: "add_product_button", class: 'btn btn-outline-primary'
+        %br
+
+
+%ul
+    = render @products

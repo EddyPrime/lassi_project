@@ -1,0 +1,15 @@
+Feature: Superadmin can delete a product
+        As a Superadmin
+        I want to have a profile page
+        So I can delete a product
+
+Scenario: Delete product
+Given I am Superadmin
+And I am on the home page
+And I follow "Profile page"
+Then I should see a list with all products sold on Lassizon
+And I select a product
+And I click on "delete product" button
+Then I should have delete the selected product
+And I should be on the "Profile page".
+

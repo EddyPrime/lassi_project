@@ -1,0 +1,7 @@
+%div
+    = user.name
+    = user.surname
+    = user.email
+    - if current_user && current_user.roles_mask == 2
+        = button_to 'Destroy', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+%div

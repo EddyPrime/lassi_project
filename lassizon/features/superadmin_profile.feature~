@@ -1,0 +1,61 @@
+Feature: Superadmin can see all te products of Lassizon
+        As a Superadmin
+        I want to have a profile page
+        So I can see all the products of Lassizon
+
+Scenario: Show Products
+Given I am Superadmin
+And I am on the home page
+And I follow "Profile page"
+Then I should see the list with all the products sold on Lassizon.
+
+
+
+Feature: Superadmin can delete a product
+        As a Superadmin
+        I want to have a profile page
+        So I can delete a product
+
+Scenario: Delete product
+Given I am Superadmin
+And I am on the home page
+And I follow "Profile page"
+Then I should see a list with all products sold on Lassizon
+And I select a product
+And I click on "delete product" button
+Then I should have delete the selected product
+And I should be on the "Profile page".
+
+
+
+Feature: Superadmin can delete a user
+        As a Superadmin
+        I want to have a profile page
+        So I can delete a user
+
+Scenario: Delete User
+Given I am Superadmin
+And I am on the home page
+And I follow "Profile page"
+Then I should see a list with all user registered on Lassizon
+And I select a user
+And I click on "delete user" button
+Then I should have delete the selected user
+And I should be on the "Profile page".
+
+
+
+Feature: Superadmin can delete a vendor
+        As a Superadmin
+        I want to have a profile page
+        So I can delete a vendor
+
+Scenario: Delete User
+Given I am Superadmin
+And I am on the home page
+And I follow "Profile page"
+Then I should see a list with all vendor registered on Lassizon
+And I select a vendor
+And I click on "delete vendor" button
+Then I should have delete the selected vendor and all his products
+And I should be on the "Profile page".

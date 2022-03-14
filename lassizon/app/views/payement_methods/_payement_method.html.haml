@@ -1,0 +1,9 @@
+%div
+    %div
+        = raw 'Number of the payment method:'
+        = payement_method.number
+    %div
+    - if current_user && current_user.roles_mask == 0 && current_user.id == payement_method.user_id
+        %h6 Click on this button to destroy this payment method
+        = button_to 'Destroy', payement_method_path(payement_method), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+%div

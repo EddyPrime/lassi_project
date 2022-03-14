@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Lassizon
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    - if user_signed_in?
+      Logged in as #{current_user.name} #{current_user.surname} [#{link_to 'Logout', destroy_user_session_path, :method => :delete}][#{link_to 'Profile Page', user_path(current_user), :method => :get}]
+    - else
+      [#{link_to 'Sign In', new_user_session_path}]
+    = yield
+    [#{link_to 'Back to Lassizon', products_path}]

@@ -1,0 +1,98 @@
+%head
+    :css
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 80%;
+            margin: 0;
+            padding: 0;
+            text-align:center;
+        }
+        central{
+            text-align:center;
+        }
+        list_of_users{
+            text-align:center;
+        }
+
+%h1 Hi  #{current_user.name} !
+%br
+%div
+    - if current_user && (current_user.roles_mask == 0)
+        = link_to "Payment Methods", payement_methods_path, class: 'btn btn-primary', :id=>'central'
+        %p You have registered #{current_user.how_many_payementMethods} payment methods
+        = link_to "Purchases", purchases_path, class: 'btn btn-primary', :id=>'central'
+        %p You have #{current_user.how_many_purchases} purchases
+    - if current_user && current_user.roles_mask == 1
+        %p{:id => "number_of_product"} You are selling #{current_user.how_many_sells} products
+    %br
+    %br
+%div
+%div
+- if current_user && current_user.roles_mask != 2
+    %p Click on this button to destroy your account
+    = button_to 'Destroy', user_path(current_user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+    %br
+%div
+%div
+    - if current_user && current_user.roles_mask == 2
+        %h3{:id => "list_of_users"} Users registered over Lassizon
+        %ul.users
+            = render User.where.not(id: current_user.id)
+%div
+%br
+%p Here you can see your position on Google Maps
+%br
+%div{:id=>"map"}
+    :javascript
+        var map, infoWindow;
+        function initMap() {
+        var pos = {lat: 41.9109, lng: 12.4818};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pos,
+          zoom: 6
+        });
+        //var marker = new google.maps.Marker({position: pos, map: map});
+        infoWindow = new google.maps.InfoWindow;
+        // HTML5 geolocation. Documentation on W3School
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var admin_pos = {
+              lat: 41.445060,
+              lng: 13.405450
+            };
+            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            var marker = new google.maps.Marker({position: pos, map: map});
+            var admin = new google.maps.Marker({position: admin_pos, map: map, icon:image });
+            infoWindow.setPosition(pos);
+            infoWindow.setContent("You're here");
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+        }
+
+%script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCNaIbiOdXt26WJDmkhyItNXYeAIaZPbyc&callback=initMap"}
+

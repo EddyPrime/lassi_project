@@ -1,0 +1,20 @@
+%head
+    :css
+        html, body {
+        text-align:center;
+        }
+%body
+    %h1{class: 'mb-3 font-weight-normal'} Your Payment Methods
+    - if current_user && (current_user.roles_mask == 0 || current_user.roles_mask == 2)
+        = form_for :payement_method, url: {action: "create", method: "post"}, class: 'form-label-group' do |f|
+            %label{:for => "number"}> Insert the number of your payment method
+            %br
+            = f.number_field :number, min: 0000, max: 9999, autofocus:true
+            %br
+            = f.submit 'Add Payment Method', class: 'btn btn-primary'
+    %br
+    %br
+    %h5 List of your payment methods:
+    %ul.payement_methods
+        %br
+        = render @payement_methods

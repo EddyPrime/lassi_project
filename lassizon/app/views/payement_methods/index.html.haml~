@@ -1,0 +1,15 @@
+%h3{class: 'h3 mb-3 font-weight-normal'} = Payement Methods Index
+
+- if current_user && (current_user.roles_mask == 0 || current_user.roles_mask == 2)
+    = form_for :payement_method, url: {action: "create", method: "post"}, class: 'form-label-group' do |f|
+        %table
+            %tr
+                %td
+                    %label{:for => "number"}> Number
+                    = f.number_field :number, min: 0000, max: 9999, class: 'form-control'
+                %td
+            %tr
+        = f.submit 'Add Payement Method', class: 'btn btn-lg btn-primary'
+%ul.payement_methods
+    %br
+    = render @payement_methods

@@ -1,0 +1,12 @@
+%head
+    :css
+        html, body {
+        text-align:center;
+        }
+
+%body
+%h1 All your purcheses are here!
+
+.list-group
+    %ul.purchases
+        = render @purchases

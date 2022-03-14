@@ -1,0 +1,12 @@
+Feature: User can see his position
+
+Scenario: As a User I want to see my position on the map
+Given I am on the "Profile page"
+Then I can see the map with my position
+
+
+Feature: Vendor can see his position
+
+Scenario: As a Vendor I want to see my position
+Given I am on the "Profile page"
+Then I can see the map with my position.

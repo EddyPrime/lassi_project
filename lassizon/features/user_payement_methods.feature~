@@ -1,0 +1,16 @@
+Feature: User can add payment methods
+        As a User
+        I want to have a profile page
+        So that I can add payment method
+
+Scenario: Add payment method
+Given I am a registered user
+And I am on the home page
+And I follow "Profile page"
+And I click on "Payment methods" button
+Then I should be on the "Payement Methods page"
+And I click on "Add payment method" button
+And I fill in "card number" with "123456789"
+Then I press on "save"
+And I should be on the "Profile page".
+
